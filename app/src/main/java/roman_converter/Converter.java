@@ -7,8 +7,8 @@ public class Converter {
         return "Hello World!";
     }
 
-    public int convert(String roman) {
-        HashMap<Character, Integer> ConverterMap = new HashMap<Character, Integer>();
+    public static int convert(String roman) {
+        HashMap<Character, Integer> ConverterMap = new HashMap<>();
 
         ConverterMap.put('I', 1);
         ConverterMap.put('V', 5);
@@ -19,21 +19,18 @@ public class Converter {
         ConverterMap.put('M', 1000);
 
         int result = 0;
+        int prevNum = 0;
 
-
-        for( int i = 0; i > roman.length(); i++) {
+        for(int i = roman.length() - 1; i >= 0; i--) {
             Integer currentNum = ConverterMap.get(roman.charAt(i));
+
             
-            if (i + 1 < roman.length()) {
-                int nextValue = ConverterMap.get(roman.charAt(i + 1));
-                if (currentNum < nextValue) {
-                    result -= currentNum;
-                } else {
-                    result += currentNum;
-                }
-            } else {
+            if (currentNum >= prevNum) {
                 result += currentNum;
+            } else {
+                result -= currentNum;
             }
+            prevNum = currentNum;
         }
       
         return result;
